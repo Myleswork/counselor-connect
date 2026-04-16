@@ -1,33 +1,54 @@
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Users, MessageSquareText, Database } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Card, CardContent } from "@/components/ui/card";
+import { Users, MessageSquareText, AlertTriangle, FileWarning } from "lucide-react";
+import { students, talkRecords } from "@/data/mockData";
 
-const shortcuts = [
-  { title: "学生档案", desc: "查看和管理学生个人档案信息", icon: Users, to: "/students", color: "bg-primary" },
-  { title: "新建记录", desc: "发起一次新的谈心谈话记录", icon: MessageSquareText, to: "/talks", color: "bg-risk-medium-text" },
-  { title: "数据管理", desc: "批量导入学生数据与档案", icon: Database, to: "/data", color: "bg-risk-low-text" },
+const now = new Date();
+const hour = now.getHours();
+const greeting = hour < 12 ? "早上好" : hour < 18 ? "下午好" : "晚上好";
+const dateStr = now.toLocaleDateString("zh-CN", { year: "numeric", month: "long", day: "numeric", weekday: "long" });
+
+const totalStudents = students.length;
+const thisMonth = talkRecords.filter((r) => {
+  const d = new Date(r.date);
+  return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+}).length;
+const highRisk = talkRecords.filter((r) => r.riskLevel === 1).length;
+const incomplete = students.filter((s) => !s.profileComplete).length;
+
+const metrics = [
+  { label: "带管学生总数", value: totalStudents, icon: Users, color: "text-primary" },
+  { label: "本月已谈话人数", value: thisMonth, icon: MessageSquareText, color: "text-emerald-600" },
+  { label: "高危预警学生", value: highRisk, icon: AlertTriangle, color: "text-red-600" },
+  { label: "待补全档案数", value: incomplete, icon: FileWarning, color: "text-amber-600" },
 ];
 
 export default function Dashboard() {
-  const navigate = useNavigate();
   return (
-    <div className="max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold text-foreground">工作台</h1>
-      <p className="text-muted-foreground mt-1 mb-8">这里提供学生档案、谈心记录和数据导入的快捷入口</p>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {shortcuts.map((s) => (
-          <Card
-            key={s.title}
-            className="cursor-pointer hover:shadow-md transition-shadow rounded-2xl"
-            onClick={() => navigate(s.to)}
-          >
-            <CardHeader className="pb-3">
-              <div className={`w-12 h-12 rounded-xl ${s.color} flex items-center justify-center mb-3`}>
-                <s.icon className="h-6 w-6 text-primary-foreground" />
+    <div className="max-w-5xl mx-auto space-y-6">
+      {/* Welcome Banner */}
+      <Card className="rounded-2xl border-0 bg-gradient-to-br from-primary/90 to-primary/70 text-primary-foreground overflow-hidden">
+        <CardContent className="p-8">
+          <h1 className="text-2xl font-bold">{greeting}，陈老师 👋</h1>
+          <p className="mt-1 opacity-90">今天也是充满活力的一天！</p>
+          <div className="mt-3 flex items-center gap-4 text-sm opacity-80">
+            <span>{dateStr}</span>
+            <span>·</span>
+            <span>南京 · 多云 22°C</span>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Metric Cards */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {metrics.map((m) => (
+          <Card key={m.label} className="rounded-2xl">
+            <CardContent className="p-5">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs text-muted-foreground font-medium">{m.label}</span>
+                <m.icon className={`h-4 w-4 ${m.color}`} />
               </div>
-              <CardTitle className="text-lg">{s.title}</CardTitle>
-              <CardDescription>{s.desc}</CardDescription>
-            </CardHeader>
+              <p className="text-3xl font-bold">{m.value}</p>
+            </CardContent>
           </Card>
         ))}
       </div>
