@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { RiskBadge } from "@/components/RiskBadge";
 import { talkRecords, attributionStats, riskStats, classes, majors } from "@/data/mockData";
-import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from "recharts";
+import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { Search, Eye, UserRound, Trash2 } from "lucide-react";
 
 const PIE_COLORS = ["#004098", "#2563eb", "#3b82f6", "#60a5fa", "#93c5fd", "#bfdbfe", "#dbeafe", "#eff6ff"];
@@ -28,28 +28,6 @@ export default function RecordList() {
 
   return (
     <div className="space-y-6">
-      {/* Filters */}
-      <div className="flex flex-wrap gap-3">
-        <div className="relative flex-1 min-w-[200px]">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input placeholder="搜索姓名或学号" value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9" />
-        </div>
-        <Select value={classFilter} onValueChange={setClassFilter}>
-          <SelectTrigger className="w-[140px]"><SelectValue placeholder="全部班级" /></SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">全部班级</SelectItem>
-            {classes.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
-          </SelectContent>
-        </Select>
-        <Select value={majorFilter} onValueChange={setMajorFilter}>
-          <SelectTrigger className="w-[140px]"><SelectValue placeholder="全部专业" /></SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">全部专业</SelectItem>
-            {majors.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
-          </SelectContent>
-        </Select>
-      </div>
-
       {/* Metric cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Card className="rounded-2xl">
@@ -98,6 +76,28 @@ export default function RecordList() {
             </ResponsiveContainer>
           </CardContent>
         </Card>
+      </div>
+
+      {/* Filters - now between charts and record list */}
+      <div className="flex flex-wrap gap-3">
+        <div className="relative flex-1 min-w-[200px]">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input placeholder="搜索姓名或学号" value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9" />
+        </div>
+        <Select value={classFilter} onValueChange={setClassFilter}>
+          <SelectTrigger className="w-[140px]"><SelectValue placeholder="全部班级" /></SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">全部班级</SelectItem>
+            {classes.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+          </SelectContent>
+        </Select>
+        <Select value={majorFilter} onValueChange={setMajorFilter}>
+          <SelectTrigger className="w-[140px]"><SelectValue placeholder="全部专业" /></SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">全部专业</SelectItem>
+            {majors.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
+          </SelectContent>
+        </Select>
       </div>
 
       {/* Record cards */}
