@@ -11,6 +11,7 @@ import StudentProfiles from "./pages/StudentProfiles";
 import StudentDetail from "./pages/StudentDetail";
 import TalkSection from "./pages/TalkSection";
 import DataManagement from "./pages/DataManagement";
+import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ function AuthGate() {
         <Route path="/students/:id" element={<StudentDetail />} />
         <Route path="/talks" element={<TalkSection />} />
         <Route path="/data" element={<DataManagement />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AppLayout>
