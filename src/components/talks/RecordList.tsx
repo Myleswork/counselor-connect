@@ -116,7 +116,7 @@ export default function RecordList() {
                 <span className="text-xs text-muted-foreground">{r.date}</span>
               </div>
               <p className="text-xs text-muted-foreground mb-1">{r.studentId} · {r.major} · {r.attribution}</p>
-              <p className="text-sm text-foreground line-clamp-2">{r.summary}</p>
+              <p className="text-sm text-foreground line-clamp-3">{r.summary}</p>
               <div className="flex gap-2 mt-3">
                 <Button size="sm" variant="outline" className="text-xs"><Eye className="h-3 w-3 mr-1" />查看详情</Button>
                 <Button size="sm" variant="outline" className="text-xs"><UserRound className="h-3 w-3 mr-1" />查看档案</Button>
