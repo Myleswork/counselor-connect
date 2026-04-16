@@ -1,4 +1,4 @@
-import { LayoutDashboard, Users, MessageSquareText, Database } from "lucide-react";
+import { LayoutDashboard, Users, MessageSquareText, Database, Settings } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useLocation } from "react-router-dom";
 import {
@@ -18,6 +18,7 @@ const items = [
   { title: "学生档案", url: "/students", icon: Users },
   { title: "谈心谈话", url: "/talks", icon: MessageSquareText },
   { title: "数据管理", url: "/data", icon: Database },
+  { title: "设置", url: "/settings", icon: Settings },
 ];
 
 export function AppSidebar() {

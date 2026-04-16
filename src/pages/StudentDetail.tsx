@@ -4,7 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { RiskBadge } from "@/components/RiskBadge";
 import { students, talkRecords } from "@/data/mockData";
+import { Textarea } from "@/components/ui/textarea";
 import { ArrowLeft } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
+import { useState } from "react";
 
 export default function StudentDetail() {
   const { id } = useParams();
@@ -89,6 +92,39 @@ export default function StudentDetail() {
           )}
         </CardContent>
       </Card>
+
+      {/* Notes Section */}
+      <StudentNotes studentId={student.studentId} />
     </div>
+  );
+}
+
+function StudentNotes({ studentId }: { studentId: string }) {
+  const storageKey = `student_note_${studentId}`;
+  const [note, setNote] = useState(() => localStorage.getItem(storageKey) || "");
+
+  const handleSave = () => {
+    localStorage.setItem(storageKey, note);
+    toast({ title: "备注已保存", description: "临时备注已存储到浏览器本地。" });
+  };
+
+  return (
+    <Card className="rounded-2xl border-dashed border-amber-300 bg-amber-50/40">
+      <CardHeader className="pb-2">
+        <CardTitle className="text-base">📝 学生备注 (Temporary Notes)</CardTitle>
+        <p className="text-xs text-muted-foreground">随手记录该生的临时信息，数据保存在浏览器本地</p>
+      </CardHeader>
+      <CardContent className="space-y-3">
+        <Textarea
+          placeholder="在此输入对该学生的临时备注..."
+          className="min-h-[120px] bg-white/60 border-amber-200 focus-visible:ring-amber-300"
+          value={note}
+          onChange={(e) => setNote(e.target.value)}
+        />
+        <div className="flex justify-end">
+          <Button onClick={handleSave}>保存备注</Button>
+        </div>
+      </CardContent>
+    </Card>
   );
 }
