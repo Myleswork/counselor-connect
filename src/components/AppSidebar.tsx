@@ -29,10 +29,10 @@ export function AppSidebar() {
     <Sidebar collapsible="icon" className="border-r border-sidebar-border">
       <SidebarContent>
         <div className="px-4 py-5 flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold text-sm shrink-0">
-            辅
+          <div className="w-8 h-8 rounded-full bg-card border border-border shadow-sm flex items-center justify-center shrink-0 aspect-square overflow-hidden">
+            <img src="/placeholder.svg" alt="校徽" className="w-5 h-5 object-contain opacity-60" />
           </div>
-          {!collapsed && <span className="font-semibold text-foreground text-sm">辅导员工作系统</span>}
+          {!collapsed && <span className="font-semibold text-foreground text-sm">辅导员系统</span>}
         </div>
         <SidebarGroup>
           <SidebarGroupLabel>导航菜单</SidebarGroupLabel>
