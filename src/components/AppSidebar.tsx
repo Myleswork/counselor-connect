@@ -28,7 +28,7 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="icon" className="border-r border-sidebar-border">
       <SidebarContent>
-        <div className="px-4 py-5 flex items-center gap-3">
+        <div className={`py-5 flex items-center gap-3 ${collapsed ? 'justify-center px-0' : 'px-4'}`}>
           <div className="w-8 h-8 rounded-full bg-card border border-border shadow-sm flex items-center justify-center shrink-0 aspect-square overflow-hidden">
             <img src="/placeholder.svg" alt="校徽" className="w-5 h-5 object-contain opacity-60" />
           </div>
