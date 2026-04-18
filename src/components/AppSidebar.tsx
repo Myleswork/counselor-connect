@@ -1,6 +1,5 @@
-import { LayoutDashboard, Users, MessageSquareText, Database, Settings } from "lucide-react";
+import { LayoutDashboard, Users, MessageSquareText, Database, Settings, ClipboardList, BedDouble } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
-import { useLocation } from "react-router-dom";
 import {
   Sidebar,
   SidebarContent,
@@ -14,9 +13,11 @@ import {
 } from "@/components/ui/sidebar";
 
 const items = [
-  { title: "工作台", url: "/", icon: LayoutDashboard },
+  { title: "工作台", url: "/", icon: LayoutDashboard, end: true },
   { title: "学生档案", url: "/students", icon: Users },
   { title: "谈心谈话", url: "/talks", icon: MessageSquareText },
+  { title: "查课记录", url: "/attendance", icon: ClipboardList },
+  { title: "查寝留痕", url: "/dorm", icon: BedDouble },
   { title: "数据管理", url: "/data", icon: Database },
   { title: "设置", url: "/settings", icon: Settings },
 ];
@@ -24,7 +25,6 @@ const items = [
 export function AppSidebar() {
   const { state } = useSidebar();
   const collapsed = state === "collapsed";
-  const location = useLocation();
 
   return (
     <Sidebar collapsible="icon" className="border-r border-sidebar-border">
@@ -44,7 +44,7 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <NavLink
                       to={item.url}
-                      end={item.url === "/"}
+                      end={item.end}
                       className="hover:bg-sidebar-accent"
                       activeClassName="bg-sidebar-accent text-sidebar-primary font-medium"
                     >
