@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
+  const displayName = user?.email?.split("@")[0] ?? "陈老师";
 
   return (
     <SidebarProvider>
@@ -15,10 +16,10 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           <header className="h-12 flex items-center justify-between border-b border-border px-4 bg-card">
             <SidebarTrigger />
             <div className="flex items-center gap-3">
-              <span className="text-sm text-muted-foreground">欢迎，陈老师</span>
+              <span className="text-sm text-muted-foreground">欢迎，{displayName} 老师</span>
               <Button variant="ghost" size="sm" onClick={logout} className="text-muted-foreground hover:text-destructive">
                 <LogOut className="h-4 w-4 mr-1" />
-                退出
+                退出登录
               </Button>
             </div>
           </header>

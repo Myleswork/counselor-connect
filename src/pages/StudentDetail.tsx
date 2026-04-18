@@ -3,9 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { RiskBadge } from "@/components/RiskBadge";
-import { students, talkRecords } from "@/data/mockData";
+import { students, talkRecords, attendanceRecords } from "@/data/mockData";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { ArrowLeft, ChevronDown } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useState } from "react";
 
@@ -93,9 +95,72 @@ export default function StudentDetail() {
         </CardContent>
       </Card>
 
+      {/* Attendance Panel */}
+      <AttendancePanel studentId={student.studentId} />
+
       {/* Notes Section */}
       <StudentNotes studentId={student.studentId} />
     </div>
+  );
+}
+
+function AttendancePanel({ studentId }: { studentId: string }) {
+  const [open, setOpen] = useState(false);
+  const records = attendanceRecords.filter((r) => r.studentId === studentId);
+  const absent = records.filter((r) => r.status === "旷课").length;
+  const late = records.filter((r) => r.status === "迟到").length;
+  const leaveEarly = records.filter((r) => r.status === "早退").length;
+
+  return (
+    <Card className="rounded-2xl">
+      <Collapsible open={open} onOpenChange={setOpen}>
+        <CollapsibleTrigger asChild>
+          <button className="w-full text-left">
+            <CardHeader className="pb-3">
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-base">出勤情况</CardTitle>
+                <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform ${open ? "rotate-180" : ""}`} />
+              </div>
+              <div className="flex gap-4 text-sm text-muted-foreground mt-2">
+                <span>累计旷课 <strong className="text-red-600">{absent}</strong> 次</span>
+                <span>累计迟到 <strong className="text-amber-600">{late}</strong> 次</span>
+                <span>累计早退 <strong className="text-orange-600">{leaveEarly}</strong> 次</span>
+              </div>
+            </CardHeader>
+          </button>
+        </CollapsibleTrigger>
+        <CollapsibleContent className="overflow-hidden data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
+          <CardContent className="pt-0">
+            {records.length === 0 ? (
+              <p className="text-sm text-muted-foreground py-4 text-center">暂无缺课记录，表现良好</p>
+            ) : (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>日期</TableHead>
+                    <TableHead>节次</TableHead>
+                    <TableHead>课程</TableHead>
+                    <TableHead>状态</TableHead>
+                    <TableHead>原因</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {records.map((r) => (
+                    <TableRow key={r.id}>
+                      <TableCell className="text-xs">{r.date}</TableCell>
+                      <TableCell className="text-xs">第 {r.period} 节</TableCell>
+                      <TableCell className="text-xs">{r.course}</TableCell>
+                      <TableCell><Badge variant="outline" className="text-xs">{r.status}</Badge></TableCell>
+                      <TableCell className="text-xs text-muted-foreground">{r.reason}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            )}
+          </CardContent>
+        </CollapsibleContent>
+      </Collapsible>
+    </Card>
   );
 }
 
