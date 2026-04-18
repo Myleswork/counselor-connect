@@ -49,8 +49,9 @@ export default function DataManagement() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="talks">谈心谈话记录</SelectItem>
-                    <SelectItem value="dorm" disabled>查寝记录（规划中）</SelectItem>
-                    <SelectItem value="class" disabled>查课记录（规划中）</SelectItem>
+                    <SelectItem value="students">学生档案</SelectItem>
+                    <SelectItem value="attendance">查课记录</SelectItem>
+                    <SelectItem value="dorm">查寝记录</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
