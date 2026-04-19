@@ -13,6 +13,7 @@ import StudentDetail from "./pages/StudentDetail";
 import TalkSection from "./pages/TalkSection";
 import AttendanceSection from "./pages/AttendanceSection";
 import DormSection from "./pages/DormSection";
+import GrowthSection from "./pages/GrowthSection";
 import DataManagement from "./pages/DataManagement";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
@@ -44,6 +45,8 @@ function AuthGate() {
         <Route path="/attendance/:tab" element={<AttendanceSection />} />
         <Route path="/dorm" element={<Navigate to="/dorm/new" replace />} />
         <Route path="/dorm/:tab" element={<DormSection />} />
+        <Route path="/growth" element={<Navigate to="/growth/new" replace />} />
+        <Route path="/growth/:tab" element={<GrowthSection />} />
         <Route path="/data" element={<DataManagement />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<NotFound />} />

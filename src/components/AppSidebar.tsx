@@ -1,4 +1,4 @@
-import { LayoutDashboard, Users, MessageSquareText, Database, Settings, ClipboardList, BedDouble } from "lucide-react";
+import { LayoutDashboard, Users, MessageSquareText, Database, Settings, ClipboardList, BedDouble, Trophy } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import {
   Sidebar,
@@ -18,6 +18,7 @@ const items = [
   { title: "谈心谈话", url: "/talks", icon: MessageSquareText },
   { title: "查课记录", url: "/attendance", icon: ClipboardList },
   { title: "查寝留痕", url: "/dorm", icon: BedDouble },
+  { title: "成长轨迹", url: "/growth", icon: Trophy },
   { title: "数据管理", url: "/data", icon: Database },
   { title: "设置", url: "/settings", icon: Settings },
 ];
