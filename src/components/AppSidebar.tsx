@@ -14,11 +14,11 @@ import {
 
 const items = [
   { title: "工作台", url: "/", icon: LayoutDashboard, end: true },
+  { title: "成长轨迹", url: "/growth", icon: Trophy },
   { title: "学生档案", url: "/students", icon: Users },
   { title: "谈心谈话", url: "/talks", icon: MessageSquareText },
   { title: "查课记录", url: "/attendance", icon: ClipboardList },
   { title: "查寝留痕", url: "/dorm", icon: BedDouble },
-  { title: "成长轨迹", url: "/growth", icon: Trophy },
   { title: "数据管理", url: "/data", icon: Database },
   { title: "设置", url: "/settings", icon: Settings },
 ];
