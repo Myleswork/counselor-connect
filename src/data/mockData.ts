@@ -170,3 +170,234 @@ export const dormStatusStats = [
   { name: "正常", value: 28 },
   { name: "需要整改", value: 6 },
 ];
+
+// ========== 成长轨迹（Growth Track） ==========
+export const growthDomains = [
+  "思想理论教育和价值引领",
+  "党团和班级建设",
+  "学风建设",
+  "学生日常事务管理",
+  "心理健康教育与咨询工作",
+  "网络思想政治教育",
+  "校园危机事件应对",
+  "职业规划与就业创业指导",
+  "理论和实践研究",
+] as const;
+
+export type GrowthDomain = (typeof growthDomains)[number];
+export type GrowthNature = "特色工作" | "个人荣誉" | "学生荣誉" | "深度复盘";
+
+export const growthNatures: GrowthNature[] = ["特色工作", "个人荣誉", "学生荣誉", "深度复盘"];
+
+export interface GrowthProject {
+  id: string;
+  name: string;
+  status: "进行中" | "已结项";
+  domain: GrowthDomain;
+}
+
+export interface GrowthRecord {
+  id: string;
+  date: string;
+  title: string;
+  domain: GrowthDomain;
+  nature: GrowthNature;
+  projectId?: string;
+  relatedStudents?: string[]; // student ids
+  description: string;
+  attachments?: string[];
+}
+
+export const growthProjects: GrowthProject[] = [
+  { id: "p1", name: "AI 辅导员研发", status: "进行中", domain: "理论和实践研究" },
+  { id: "p2", name: "电气 2101 学风跃升计划", status: "已结项", domain: "学风建设" },
+  { id: "p3", name: "朋辈心理互助网络", status: "进行中", domain: "心理健康教育与咨询工作" },
+  { id: "p4", name: "红色基因传承宣讲团", status: "已结项", domain: "思想理论教育和价值引领" },
+];
+
+export const growthRecords: GrowthRecord[] = [
+  // ===== AI 辅导员研发 项目（4 个阶段） =====
+  {
+    id: "g1",
+    date: "2025-03-02",
+    title: "需求调研：辅导员日常工作痛点访谈",
+    domain: "理论和实践研究",
+    nature: "特色工作",
+    projectId: "p1",
+    description:
+      "走访学院 12 位一线辅导员，整理出 38 项高频低价值事务（谈心录音整理、查课汇总、佐证材料归档等），形成《辅导员智能助手需求白皮书 v0.1》。",
+    attachments: ["需求白皮书v0.1.pdf"],
+  },
+  {
+    id: "g2",
+    date: "2025-03-18",
+    title: "原型设计：五部曲谈心录音转写流程跑通",
+    domain: "理论和实践研究",
+    nature: "深度复盘",
+    projectId: "p1",
+    description:
+      "基于讯飞星火接入语音转写，使用 Gemini 实现五部曲（问题、探索、分析、讨论、反馈）自动结构化抽取。在 8 段真实录音上的字段命中率达到 82%。",
+  },
+  {
+    id: "g3",
+    date: "2025-04-10",
+    title: "模型微调：风险等级判断准确率提升至 91%",
+    domain: "理论和实践研究",
+    nature: "特色工作",
+    projectId: "p1",
+    description:
+      "针对学业、心理、就业三类高频归因，使用近三年 320 条真实谈心记录构建小样本微调集，三级风险分类 F1 由 0.74 提升至 0.91。",
+    attachments: ["微调实验报告.docx"],
+  },
+  {
+    id: "g4",
+    date: "2025-04-15",
+    title: "校内试点：6 位辅导员小范围灰度上线",
+    domain: "理论和实践研究",
+    nature: "特色工作",
+    projectId: "p1",
+    relatedStudents: ["1", "3", "5"],
+    description:
+      "在自动化学院、计算机学院 6 位辅导员中开放试用一周，平均节约谈心整理时间 65%，收集 27 条迭代建议，下一阶段将打通查课与查寝模块。",
+  },
+
+  // ===== 电气 2101 学风跃升计划（3 个阶段） =====
+  {
+    id: "g5",
+    date: "2024-09-10",
+    title: "学风现状摸排与挂科预警建模",
+    domain: "学风建设",
+    nature: "特色工作",
+    projectId: "p2",
+    description:
+      "对电气 2101 全体 32 名学生上一学年成绩做回归分析，识别 7 名挂科高风险学生，建立一对一学业导师匹配机制。",
+  },
+  {
+    id: "g6",
+    date: "2024-12-20",
+    title: "高数补习营：期末平均分提升 11.4 分",
+    domain: "学风建设",
+    nature: "学生荣誉",
+    projectId: "p2",
+    relatedStudents: ["1", "2"],
+    description:
+      "联合数学学院研究生开设 8 周高数加油站，班级期末平均分由 71.2 提升至 82.6，挂科率由 21% 降至 3%。",
+  },
+  {
+    id: "g7",
+    date: "2025-01-15",
+    title: "结项：电气 2101 获评校级先进班集体",
+    domain: "党团和班级建设",
+    nature: "学生荣誉",
+    projectId: "p2",
+    relatedStudents: ["1", "2"],
+    description:
+      "全班绩点 3.45，英语四级通过率 100%，学风建设案例入选校学工部年度典型，获评 2024 年度校级先进班集体。",
+    attachments: ["先进班集体公示文件.pdf"],
+  },
+
+  // ===== 朋辈心理互助网络（2 个阶段） =====
+  {
+    id: "g8",
+    date: "2025-02-25",
+    title: "组建朋辈心理委员核心团队",
+    domain: "心理健康教育与咨询工作",
+    nature: "特色工作",
+    projectId: "p3",
+    description:
+      "选拔 16 名学生心理委员，联合校心理咨询中心完成 24 学时专业培训，覆盖危机识别、倾听技术、转介流程。",
+  },
+  {
+    id: "g9",
+    date: "2025-04-05",
+    title: "成功干预一例考试焦虑学生（已转介专业咨询）",
+    domain: "心理健康教育与咨询工作",
+    nature: "深度复盘",
+    projectId: "p3",
+    relatedStudents: ["3"],
+    description:
+      "通过朋辈心理委员预警机制，48 小时内完成早期识别—初步谈话—转介专业咨询全流程闭环，复盘形成《朋辈干预 SOP v1.0》。",
+  },
+
+  // ===== 红色基因传承宣讲团（已结项） =====
+  {
+    id: "g10",
+    date: "2024-11-08",
+    title: "组建学生宣讲团并完成首场宣讲",
+    domain: "思想理论教育和价值引领",
+    nature: "特色工作",
+    projectId: "p4",
+    relatedStudents: ["4", "8"],
+    description:
+      "招募 12 名学生骨干组建“航空报国”主题宣讲团，首场进社区宣讲覆盖听众 200+，被江苏省教育厅官微转发报道。",
+  },
+  {
+    id: "g11",
+    date: "2024-12-30",
+    title: "结项：获评校园文化建设优秀成果二等奖",
+    domain: "思想理论教育和价值引领",
+    nature: "个人荣誉",
+    projectId: "p4",
+    description:
+      "项目共完成宣讲 14 场，覆盖师生及社区群众 3200 余人，获 2024 年度校园文化建设优秀成果二等奖。",
+    attachments: ["获奖证书.jpg"],
+  },
+
+  // ===== 独立单次事件 =====
+  {
+    id: "g12",
+    date: "2025-04-12",
+    title: "获评 2024 年度校级优秀辅导员",
+    domain: "党团和班级建设",
+    nature: "个人荣誉",
+    description:
+      "因在班级建设、学生危机干预、学风提升方面表现突出，获 2024 年度南京航空航天大学优秀辅导员称号。",
+    attachments: ["优秀辅导员证书.jpg"],
+  },
+  {
+    id: "g13",
+    date: "2025-03-28",
+    title: "处置一起宿舍突发冲突事件",
+    domain: "校园危机事件应对",
+    nature: "深度复盘",
+    relatedStudents: ["6"],
+    description:
+      "凌晨接到宿管来电，赶到现场调解两宿舍因生活习惯产生的肢体冲突，2 小时内完成谈话、家长沟通、书面承诺签署，复盘形成《宿舍冲突处置流程》。",
+  },
+  {
+    id: "g14",
+    date: "2025-03-05",
+    title: "指导刘子豪同学斩获华为终端 Offer",
+    domain: "职业规划与就业创业指导",
+    nature: "学生荣誉",
+    relatedStudents: ["5"],
+    description:
+      "针对该生秋招屡战屡败的情况，进行 4 次一对一简历优化与 mock 面试，最终成功签约华为终端 BG，年薪 28W。",
+  },
+  {
+    id: "g15",
+    date: "2025-02-14",
+    title: "公众号《辅导员手记》单篇阅读破 5000",
+    domain: "网络思想政治教育",
+    nature: "特色工作",
+    description:
+      "原创推文《当 00 后开始整顿大学生活》在校园公众号发布后 24 小时阅读破 5000，被多个兄弟院校学工系统转载。",
+  },
+  {
+    id: "g16",
+    date: "2025-01-20",
+    title: "论文《新工科背景下辅导员数字化能力建设》被期刊录用",
+    domain: "理论和实践研究",
+    nature: "个人荣誉",
+    description:
+      "独立作者论文被《思想教育研究》（CSSCI）正式录用，预计 2025 年第 6 期刊发。",
+    attachments: ["录用通知.pdf"],
+  },
+];
+
+// 雷达图数据（按九大职能聚合记录数）
+export const growthRadarData = growthDomains.map((d) => ({
+  domain: d.length > 8 ? d.slice(0, 6) + "…" : d,
+  fullDomain: d,
+  count: growthRecords.filter((r) => r.domain === d).length,
+}));
