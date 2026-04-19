@@ -292,8 +292,8 @@ function ProjectCard({ project }: { project: { id: string; name: string; status:
               className={cn(
                 "text-[10px] border-0",
                 project.status === "进行中"
-                  ? "bg-blue-100 text-blue-700 hover:bg-blue-100"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-100",
+                  ? "bg-primary/10 text-primary hover:bg-primary/10"
+                  : "bg-muted text-muted-foreground hover:bg-muted",
               )}
             >
               {project.status}
