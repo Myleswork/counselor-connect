@@ -8,7 +8,6 @@ import {
   MessageCircleHeart,
   Sparkles,
   Eye,
-  User,
   BookOpen,
   HeartHandshake,
   Trophy,
@@ -139,73 +138,48 @@ function InfoRow({ label, value }: { label: string; value: React.ReactNode }) {
 }
 
 export default function StudentProfileInsight({ student }: Props) {
-  // 优先使用传入学生姓名/班级，其余字段使用 mock
   const name = student?.name ?? mock.name;
   const className = student?.class ?? mock.className;
   const major = student?.major ?? mock.major;
 
   return (
     <div className="space-y-5">
-      {/* 顶部头部 */}
+      {/* 1. 顶部画像头部卡 */}
       <SoftCard className="overflow-hidden">
         <div className="bg-gradient-to-br from-sky-50 via-white to-violet-50 p-6">
-          <div className="flex flex-col lg:flex-row lg:items-center gap-5">
+          <div className="flex flex-col lg:flex-row lg:items-start gap-6">
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-3 flex-wrap">
                 <h2 className="text-2xl font-semibold tracking-tight text-foreground">{name}</h2>
-                <Badge variant="outline" className="bg-white/70 border-sky-200 text-sky-700 font-normal">
-                  {mock.grade}
-                </Badge>
-                <Badge variant="outline" className="bg-white/70 border-violet-200 text-violet-700 font-normal">
-                  {className} · {major}
-                </Badge>
+                <span className="text-sm text-muted-foreground">
+                  {mock.grade} · {className} · {major}
+                </span>
               </div>
-              <div className="mt-3 grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-                <div>
-                  <p className="text-xs text-muted-foreground">学院</p>
-                  <p className="font-medium">{mock.college}</p>
-                </div>
-                <div>
-                  <p className="text-xs text-muted-foreground">宿舍</p>
-                  <p className="font-medium">{mock.dorm}</p>
-                </div>
-                <div>
-                  <p className="text-xs text-muted-foreground">首要发展意向</p>
-                  <p className="font-medium">{mock.intentionPrimary}</p>
-                </div>
-                <div>
-                  <p className="text-xs text-muted-foreground">次要发展意向</p>
-                  <p className="font-medium">{mock.intentionSecondary}</p>
-                </div>
+              <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1 text-sm text-muted-foreground">
+                <span>宿舍：{mock.dorm}</span>
+                <span>发展意向：{mock.intentionPrimary} / {mock.intentionSecondary}</span>
               </div>
               <p className="mt-4 text-sm text-muted-foreground leading-relaxed max-w-3xl">
                 基于档案、谈话、考勤与成长记录生成，帮助你快速了解近期支持重点。
               </p>
             </div>
-            <div className="lg:w-72 shrink-0">
-              <div className="rounded-xl bg-white/70 backdrop-blur border border-white p-4 space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-muted-foreground">最近更新</span>
-                  <span className="text-xs font-medium">{mock.updatedAt}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-muted-foreground">数据来源</span>
-                  <span className="text-xs font-medium">档案 · 谈话 · 考勤 · 成长</span>
-                </div>
-                <div className="flex items-center gap-1.5 pt-1 text-xs text-muted-foreground">
-                  <Info className="h-3.5 w-3.5" />
-                  仅供辅导参考
-                </div>
-                <Button size="sm" variant="outline" className="w-full mt-2 bg-white">
-                  <RefreshCw className="h-3.5 w-3.5 mr-1.5" /> 刷新画像
-                </Button>
+            <div className="shrink-0 flex flex-col items-start lg:items-end gap-2 text-xs text-muted-foreground">
+              <div className="flex flex-wrap gap-x-4 gap-y-1">
+                <span>最近更新 <span className="text-foreground/80 font-medium">{mock.updatedAt}</span></span>
+                <span>数据来源 <span className="text-foreground/80 font-medium">档案 · 谈话 · 考勤 · 成长</span></span>
               </div>
+              <div className="flex items-center gap-1.5">
+                <Info className="h-3.5 w-3.5" /> 仅供辅导参考
+              </div>
+              <Button size="sm" variant="ghost" className="h-7 px-2 text-xs text-muted-foreground hover:text-foreground">
+                <RefreshCw className="h-3 w-3 mr-1" /> 重新生成
+              </Button>
             </div>
           </div>
         </div>
       </SoftCard>
 
-      {/* 第二层：核心指标 */}
+      {/* 2. 四个画像概览卡 */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard icon={GraduationCap} title="学业状态" tone="blue">
           <div className="flex items-baseline gap-3">
@@ -237,7 +211,7 @@ export default function StudentProfileInsight({ student }: Props) {
         </MetricCard>
       </div>
 
-      {/* 第三层：综合摘要 */}
+      {/* 3. 综合画像摘要卡 */}
       <SoftCard>
         <CardHeader className="pb-3">
           <CardTitle className="text-base flex items-center gap-2">
@@ -246,10 +220,10 @@ export default function StudentProfileInsight({ student }: Props) {
         </CardHeader>
         <CardContent>
           <p className="text-sm leading-relaxed text-foreground/80">
-            该生目前学籍信息较完整，发展意向较明确。近期谈心主题主要集中在学业适应与未来规划，考勤整体稳定，暂无明显连续异常记录。已有若干成长亮点，可在后续沟通中结合正向反馈，帮助其进一步明确阶段目标。
+            该生当前整体状态较平稳，发展方向较明确。近期支持重点可放在学习节奏、竞赛投入与阶段目标拆解上。后续沟通中可结合已有成长记录进行正向反馈，帮助其进一步明确阶段性行动计划。
           </p>
           <div className="flex flex-wrap gap-2 mt-4">
-            {["发展意向清晰", "考勤整体稳定", "适合正向激励"].map((t) => (
+            {["发展方向明确", "状态整体平稳", "适合正向激励"].map((t) => (
               <Badge key={t} variant="outline" className="bg-sky-50 border-sky-200 text-sky-700 font-normal">
                 {t}
               </Badge>
@@ -258,64 +232,54 @@ export default function StudentProfileInsight({ student }: Props) {
         </CardContent>
       </SoftCard>
 
-      {/* 第四层：四个画像板块 */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <SectionCard icon={User} title="基础画像">
-          <div className="space-y-0.5">
-            <InfoRow label="学院" value={mock.college} />
-            <InfoRow label="年级 / 班级" value={`${mock.grade} · ${className}`} />
-            <InfoRow label="专业" value={major} />
-            <InfoRow label="宿舍" value={mock.dorm} />
-            <InfoRow label="生源地" value={mock.hometown} />
-            <InfoRow label="政治面貌" value={mock.politics} />
-            <InfoRow label="发展意向" value={`${mock.intentionPrimary} / ${mock.intentionSecondary}`} />
-          </div>
-        </SectionCard>
-
+      {/* 4. 三个重点画像卡 */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
         <SectionCard icon={BookOpen} title="学业画像">
-          <div className="space-y-0.5">
-            <InfoRow label="GPA" value={mock.academic.gpa.toFixed(2)} />
-            <InfoRow label="必修绩点" value={mock.academic.requiredGpa.toFixed(2)} />
-            <InfoRow
-              label="考勤异常"
-              value={`共 ${mock.academic.abnormalTotal} 次（迟到 ${mock.academic.late} · 病事假 ${mock.academic.sickLeave}）`}
-            />
-            <InfoRow label="高频异常课程" value={mock.academic.frequentCourses.join("、")} />
-            <InfoRow label="最近一次异常" value={mock.academic.lastAbnormal} />
-          </div>
-          <p className="mt-3 text-xs leading-relaxed text-muted-foreground bg-muted/40 rounded-lg p-3">
-            近期课堂参与整体较稳定，如后续出现连续迟到或旷课，可结合课程时间与个人作息进一步了解原因。
-          </p>
+          <InsightBlock title="课堂参与" text="近期考勤整体较稳定，仅有零星异常，暂未呈现连续异常趋势。" />
+          <InsightBlock title="课程关注点" text="异常记录涉及高等数学、数据结构，可结合课程难度、上课时间与个人作息进一步了解原因。" />
+          <InsightBlock title="观察建议" text="如后续出现连续迟到或旷课，建议及时进行轻量沟通。" />
         </SectionCard>
 
         <SectionCard icon={HeartHandshake} title="谈心画像">
-          <div className="space-y-0.5">
-            <InfoRow label="累计谈话次数" value={`${mock.talk.total} 次`} />
-            <InfoRow label="最近一次谈话" value={mock.talk.last} />
-            <InfoRow label="常见谈话主题" value={mock.talk.topics.join("、")} />
-            <InfoRow label="最高关注级别" value={mock.talk.maxLevel} />
-            <InfoRow label="最近关注级别" value={mock.talk.recentLevel} />
-            <InfoRow label="主要诉求" value={mock.talk.appeal} />
-          </div>
-          <p className="mt-3 text-xs leading-relaxed text-muted-foreground bg-muted/40 rounded-lg p-3">
-            谈话主题主要集中在学业规划与适应情况，后续可采用开放式提问，引导其进一步梳理阶段目标。
-          </p>
+          <InsightBlock title="主题集中方向" text="谈话主题主要集中在学业规划、竞赛压力与时间管理，说明其近期关注点偏向发展规划与任务平衡。" />
+          <InsightBlock title="主要诉求" text="希望平衡课程学习与竞赛准备。" />
+          <InsightBlock title="沟通切入点" text="后续可采用开放式提问，引导其将长期目标拆解为近期可执行任务。" />
         </SectionCard>
 
         <SectionCard icon={Trophy} title="成长画像">
-          <div className="space-y-0.5">
-            <InfoRow label="成长记录数量" value={`${mock.growth.total} 条`} />
-            <InfoRow label="最近成长事件" value={mock.growth.recent} />
-            <InfoRow label="记录类型分布" value={mock.growth.types.join("、")} />
-            <InfoRow label="功能领域分布" value={mock.growth.domains.join("、")} />
-          </div>
-          <p className="mt-3 text-xs leading-relaxed text-muted-foreground bg-muted/40 rounded-lg p-3">
-            已有成长记录显示该生在活动参与和自我复盘方面有一定积累，后续可结合具体事件给予正向反馈。
-          </p>
+          <InsightBlock title="正向事件" text="近期参与学院程序设计训练营，体现出一定实践参与度。" />
+          <InsightBlock title="能力倾向" text="成长记录集中在项目参与、活动实践和自我复盘，说明其具备一定主动发展意识。" />
+          <InsightBlock title="反馈建议" text="后续谈话中可结合具体事件给予正向反馈，增强持续投入感。" />
         </SectionCard>
       </div>
 
-      {/* 第五层：关注提醒 + 支持建议 */}
+      {/* 5. 基础特征摘要卡 */}
+      <SoftCard>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-base flex items-center gap-2">
+            <Info className="h-4 w-4 text-primary" /> 基础特征摘要
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+            {[
+              { label: "学籍信息", value: "较完整" },
+              { label: "发展方向", value: `${mock.intentionPrimary} / ${mock.intentionSecondary}` },
+              { label: "住宿信息", value: "已登记" },
+              { label: "生源地", value: mock.hometown },
+              { label: "政治面貌", value: mock.politics },
+              { label: "备注线索", value: "暂无特别备注" },
+            ].map((it) => (
+              <div key={it.label} className="rounded-xl bg-muted/40 border border-border/50 p-3">
+                <p className="text-xs text-muted-foreground">{it.label}</p>
+                <p className="text-sm font-medium mt-0.5 text-foreground/90">{it.value}</p>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </SoftCard>
+
+      {/* 6. 底部双栏：关注提醒 + 支持建议 */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <SoftCard>
           <CardHeader className="pb-3">
@@ -338,7 +302,7 @@ export default function StudentProfileInsight({ student }: Props) {
               {
                 level: "建议跟进",
                 tone: "bg-violet-50 text-violet-700 border-violet-200",
-                text: "该生有明确发展意向，可结合竞赛与考研路径给予具体建议。",
+                text: "该生发展意向较明确，可结合竞赛与考研路径给予更具体的阶段建议。",
               },
             ].map((item, i) => (
               <div key={i} className="flex gap-3 items-start rounded-xl border border-border/60 p-3">
