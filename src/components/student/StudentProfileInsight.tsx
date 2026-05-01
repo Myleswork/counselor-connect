@@ -128,15 +128,6 @@ function SectionCard({
   );
 }
 
-function InfoRow({ label, value }: { label: string; value: React.ReactNode }) {
-  return (
-    <div className="flex items-baseline justify-between py-1.5 border-b border-dashed border-border/60 last:border-0">
-      <span className="text-xs text-muted-foreground">{label}</span>
-      <span className="text-sm font-medium text-foreground text-right">{value}</span>
-    </div>
-  );
-}
-
 function InsightBlock({ title, text }: { title: string; text: string }) {
   return (
     <div className="space-y-1">
