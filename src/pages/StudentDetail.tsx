@@ -7,6 +7,8 @@ import { students, talkRecords, attendanceRecords } from "@/data/mockData";
 import { Textarea } from "@/components/ui/textarea";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import StudentProfileInsight from "@/components/student/StudentProfileInsight";
 import { ArrowLeft, ChevronDown } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useState } from "react";
@@ -48,7 +50,16 @@ export default function StudentDetail() {
         )}
       </div>
 
-      {/* Info Cards Grid */}
+      <Tabs defaultValue="overview" className="w-full">
+        <TabsList>
+          <TabsTrigger value="overview">档案概览</TabsTrigger>
+          <TabsTrigger value="insight">学生画像</TabsTrigger>
+        </TabsList>
+        <TabsContent value="insight" className="mt-5">
+          <StudentProfileInsight student={student} />
+        </TabsContent>
+        <TabsContent value="overview" className="mt-5 space-y-6">
+          {/* Info Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {infoCards.map((card) => (
           <Card key={card.title} className="rounded-2xl">
@@ -100,6 +111,8 @@ export default function StudentDetail() {
 
       {/* Notes Section */}
       <StudentNotes studentId={student.studentId} />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
