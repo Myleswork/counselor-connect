@@ -137,6 +137,15 @@ function InfoRow({ label, value }: { label: string; value: React.ReactNode }) {
   );
 }
 
+function InsightBlock({ title, text }: { title: string; text: string }) {
+  return (
+    <div className="space-y-1">
+      <p className="text-xs font-medium text-foreground/90">{title}</p>
+      <p className="text-sm leading-relaxed text-muted-foreground">{text}</p>
+    </div>
+  );
+}
+
 export default function StudentProfileInsight({ student }: Props) {
   const name = student?.name ?? mock.name;
   const className = student?.class ?? mock.className;
