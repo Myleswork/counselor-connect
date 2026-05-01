@@ -123,7 +123,7 @@ function SectionCard({
           </div>
         </div>
       </CardHeader>
-      <CardContent className="pt-0">{children}</CardContent>
+      <CardContent className="pt-0 space-y-3">{children}</CardContent>
     </SoftCard>
   );
 }
