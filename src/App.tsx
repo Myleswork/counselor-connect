@@ -3,10 +3,8 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { AuthProvider, useAuth } from "@/contexts/AuthContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 import { AppLayout } from "@/components/AppLayout";
-import { Loader2 } from "lucide-react";
-import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import StudentProfiles from "./pages/StudentProfiles";
 import StudentDetail from "./pages/StudentDetail";
@@ -21,18 +19,6 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 function AuthGate() {
-  const { isAuthenticated, loading } = useAuth();
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <Loader2 className="h-6 w-6 animate-spin text-primary" />
-      </div>
-    );
-  }
-
-  if (!isAuthenticated) return <Login />;
-
   return (
     <AppLayout>
       <Routes>
