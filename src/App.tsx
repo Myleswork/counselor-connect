@@ -21,18 +21,6 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 function AuthGate() {
-  const { isAuthenticated, loading } = useAuth();
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <Loader2 className="h-6 w-6 animate-spin text-primary" />
-      </div>
-    );
-  }
-
-  if (!isAuthenticated) return <Login />;
-
   return (
     <AppLayout>
       <Routes>
